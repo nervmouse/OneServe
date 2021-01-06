@@ -7,7 +7,7 @@
     "test": "node serve.js"
   },
   "bin": {
-    "serve": "node ./serve.js"
+    "serve": "./serve.js"
   },
   "author": "Jim Chen",
   "license": "ISC",
