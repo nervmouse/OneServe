@@ -1,0 +1,18 @@
+{
+  "name": "oneserve",
+  "version": "1.0.0",
+  "description": "static server",
+  "main": "index.js",
+  "scripts": {
+    "test": "node serve.js"
+  },
+  "bin": {
+    "serve": "./serve.js"
+  },
+  "author": "Jim Chen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2"
+  }
+}
