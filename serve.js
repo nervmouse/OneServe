@@ -2,7 +2,12 @@
 const express = require('express')
 const proxy = require('express-http-proxy')
 const app = express()
-
+let packageInfo={}
+try{
+  packageInfo=require('package.json')
+}catch(err){
+  console.error(err)
+}
 const path=require('path')
 const resolve = path.resolve
 const fs=require('fs')
@@ -81,5 +86,5 @@ if (cfg.mode==='history'){
   })
 }
 
-
+console.log('OneServ ver.'+packageInfo.version)
 app.listen(cfg.port, () => console.log(`http://127.0.0.1:${cfg.port}`))
