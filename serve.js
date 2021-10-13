@@ -10,7 +10,7 @@ let cfg={
   port:8000,
   api_url:'http://api.gov.tw',
   api_uri:'/api',
-  self_api_uri:'/api',
+  local_api_uri:'/api',
   mode:'hash',  //history or hash
   root_dir:'./spa',
   index_path:null // for hostory mode
@@ -33,6 +33,10 @@ if (process.env.API_URL){
 if (process.env.API_URI){
   cfg.api_uri=process.env.API_URI
 }
+
+if (process.env.LOCAL_API_URI) {
+  cfg.local_api_uri = process.env.LOCAL_API_URI
+}
 if (process.env.MODE){
   cfg.mode=process.env.MODE
 }
@@ -52,10 +56,10 @@ if (cfg.root_dir && cfg.root_dir[0]==='.'){
 app.use(express.static(cfg.root_dir))
 
 if (cfg.api_url){
-  if (!cfg.self_api_uri){
-    cfg.self_api_uri = cfg.api_uri
+  if (!cfg.local_api_uri){
+    cfg.local_api_uri = cfg.api_uri
   }
-  app.use(cfg.self_api_uri, proxy((cfg.api_url ),{
+  app.use(cfg.local_api_uri, proxy((cfg.api_url ),{
     proxyReqPathResolver: function (req) {
       console.log(req.url)
       return cfg.api_uri+req.url
