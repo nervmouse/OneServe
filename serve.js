@@ -8,18 +8,21 @@ const resolve = path.resolve
 const fs=require('fs')
 let cfg={
   port:8000,
-  api_url:'http://note.wanfang.gov.tw:3000',
+  api_url:'http://api.gov.tw',
   api_uri:'/api',
-  mode:'history',  //history
-  root_dir:'./dist/spa',
-  index_path:null
+  self_api_uri:'/api',
+  mode:'hash',  //history or hash
+  root_dir:'./spa',
+  index_path:null // for hostory mode
 }
 
 try{
   Object.assign(cfg,JSON.parse(fs.readFileSync('./serve.cfg.json')))
 }catch(e){
-
+  console.log(e)
+  console.log("No config : serve.cfg.json")
 }
+console.dir(cfg)
 if (process.env.PORT){
   cfg.port=process.env.PORT
 }
@@ -49,7 +52,10 @@ if (cfg.root_dir && cfg.root_dir[0]==='.'){
 app.use(express.static(cfg.root_dir))
 
 if (cfg.api_url){
-  app.use(cfg.api_uri, proxy((cfg.api_url ),{
+  if (!cfg.self_api_uri){
+    cfg.self_api_uri = cfg.api_uri
+  }
+  app.use(cfg.self_api_uri, proxy((cfg.api_url ),{
     proxyReqPathResolver: function (req) {
       console.log(req.url)
       return cfg.api_uri+req.url
