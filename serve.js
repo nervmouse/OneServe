@@ -28,7 +28,6 @@ try{
 }catch(err){
   console.error(err)
 }
-const path=require('path')
 const resolve = path.resolve
 const fs=require('fs')
 let cfg={
