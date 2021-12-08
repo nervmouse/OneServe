@@ -1,6 +1,26 @@
 #!/usr/bin/env node
 const express = require('express')
 const proxy = require('express-http-proxy')
+const child_process = require('child_process')
+const path = require('path')
+const rootPath = path.join(__dirname, './')
+const exec = function (cmd, options = {}) {
+  return new Promise((res, rej) => {
+    console.log('[cmd] ' + cmd)
+    child_process.exec(cmd, options, (error, stdout, stderr) => {
+      if (stderr) {
+        //rej(stderr)
+        console.error('[cmd stderr]', stderr)
+      }
+      if (error) {
+        //rej(error)
+        console.error('[cmd err]', error)
+      }
+      res(stdout)
+      console.log(stdout)
+    })
+  })
+}
 const app = express()
 let packageInfo={}
 try{
@@ -18,7 +38,8 @@ let cfg={
   local_api_uri:'/api',
   mode:'hash',  //history or hash
   root_dir:'./spa',
-  index_path:null // for hostory mode
+  index_path:null, // for hostory mode,
+  auto_update:true
 }
 
 try{
@@ -70,6 +91,19 @@ if (cfg.api_url){
     }
   }))
 }
+if(cfg.auto_update){
+  app.use('/_oneserve',(req,res,next)=>{
+    console.log(req.url)
+    if (req.url==='/update'){
+      exec('git pull', {
+        cwd: rootPath
+      })
+    }
+    res.end(req.url)
+    
+  })
+}
+
 
 if (cfg.mode==='history'){
   if (!cfg.index_path){
