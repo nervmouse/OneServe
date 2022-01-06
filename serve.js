@@ -77,11 +77,6 @@ if (cfg.root_dir && cfg.root_dir[0]==='.'){
 	cfg.root_dir=path.join(process.cwd(),cfg.root_dir)
 }
 
-if(cfg.env_mode) {
-  console.log(cfg.env_mode)
-  process.env.ENV_MODE = cfg.env_mode
-}
-
 app.use(express.static(cfg.root_dir))
 
 if (cfg.api_url){
