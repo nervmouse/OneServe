@@ -38,7 +38,8 @@ let cfg={
   mode:'hash',  //history or hash
   root_dir:'./spa',
   index_path:null, // for hostory mode,
-  auto_update:true
+  auto_update:true,
+  console_title: packageInfo.name
 }
 
 try{
@@ -73,10 +74,15 @@ if (process.env.INDEX_PATH){
   cfg.index_path=process.env.INDEX_PATH
 }
 
+if (process.env.CONSOLE_TITLE) {
+  cfg.console_title = process.env.CONSOLE_TITLE
+}
+
 if (cfg.root_dir && cfg.root_dir[0]==='.'){
 	cfg.root_dir=path.join(process.cwd(),cfg.root_dir)
 }
 
+process.title = cfg.console_title
 app.use(express.static(cfg.root_dir))
 
 if (cfg.api_url){
