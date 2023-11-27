@@ -93,6 +93,14 @@ if (cfg.api_url){
     proxyReqPathResolver: function (req) {
       console.log(req.url)
       return cfg.api_uri+req.url
+    },
+    proxyReqOptDecorator(proxyReqOpts, srcReq) {
+      // recieves an Object of headers, returns an Object of headers.
+      
+      proxyReqOpts.headers['X-Forwarded-For']=proxyReqOpts.headers['x-forwarded-for'] || srcReq.ip
+      proxyReqOpts.headers['x-real-ip']=proxyReqOpts.headers['x-real-ip'] || srcReq.ip
+
+      return proxyReqOpts;
     }
   }))
 }
