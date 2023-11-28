@@ -1,5 +1,5 @@
 {
-  "name": "oneserve",
+  "name": "@nervmouse/oneserve",
   "version": "1.5.0",
   "description": "static server",
   "main": "index.js",
