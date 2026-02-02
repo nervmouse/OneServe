@@ -22,6 +22,26 @@ npx @nervmouse/oneserve
 serve
 ```
 
+### Local Project Usage
+
+If installed as a dependency in your project:
+
+**In `package.json` scripts:**
+
+```json
+{
+  "scripts": {
+    "dev": "serve"
+  }
+}
+```
+
+**Using npx in project root:**
+
+```bash
+npx serve
+```
+
 ## Configuration
 
 `oneserve` can be configured via a `serve.cfg.json` file in the working directory or via environment variables.
