@@ -88,4 +88,6 @@ Proxies requests matching `local_api_uri` to `api_url`.
 If `mode` is set to `history`, any request that doesn't match a static file or the proxy path will serve the `index.html` (defined by `index_path` or default `root_dir/index.html`), allowing client-side routing to work.
 
 ### Auto Update
-The server exposes `/_oneserve/update`. Accessing this endpoint will execute `git pull` in the server's root directory.
+**Security Warning:** This feature exposes an unprotected endpoint `/_oneserve/update` that executes `git pull`. Enabling this in a production or publicly accessible environment is a major security risk and is strongly discouraged. It should only be used in controlled, trusted environments.
+
+When enabled, the server exposes `/_oneserve/update`. Accessing this endpoint will execute `git pull` in the server's root directory.
