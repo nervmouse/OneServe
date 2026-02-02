@@ -82,7 +82,7 @@ Serves static files from the specified `root_dir`.
 ### API Proxy
 Proxies requests matching `local_api_uri` to `api_url`.
 - Automatically handles `X-Forwarded-For` and `x-real-ip` headers.
-- Maps `local_api_uri` + `path` to `api_url` + `api_uri` + `path`.
+- A request to `[server]:[port]/<local_api_uri>/<some_path>` is proxied to `<api_url>/<api_uri>/<some_path>`.
 
 ### SPA History Mode
 If `mode` is set to `history`, any request that doesn't match a static file or the proxy path will serve the `index.html` (defined by `index_path` or default `root_dir/index.html`), allowing client-side routing to work.
