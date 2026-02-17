@@ -91,8 +91,9 @@ if (cfg.api_url){
   }
   app.use(cfg.local_api_uri, proxy((cfg.api_url ),{
     proxyReqPathResolver: function (req) {
-      console.log(req.url)
-      return cfg.api_uri+req.url
+      const url = req.url
+      setImmediate(() => console.log(url))
+      return cfg.api_uri+url
     },
     proxyReqOptDecorator(proxyReqOpts, srcReq) {
       // recieves an Object of headers, returns an Object of headers.
