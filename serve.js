@@ -122,9 +122,10 @@ if (cfg.mode==='history'){
   if (!cfg.index_path){
     cfg.index_path=cfg.root_dir+'/index.html'
   }
+  const resolvedIndexPath = resolve(cfg.index_path)
   app.all("*", (_req, res) => {
     try {
-      res.sendFile(resolve(cfg.index_path))
+      res.sendFile(resolvedIndexPath)
     } catch (error) {
       console.log(error)
       res.json({ success: false, message: "Something went wrong" });
