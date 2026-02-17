@@ -6,7 +6,7 @@ const path = require('path')
 const rootPath = path.join(__dirname, './')
 const exec = function (cmd, options = {}) {
   return new Promise((res, rej) => {
-    console.log('[cmd] ' + cmd)
+    setImmediate(() => console.log('[cmd] ' + cmd))
     child_process.exec(cmd, options, (error, stdout, stderr) => {
       if (stderr) {
         //rej(stderr)
@@ -17,7 +17,7 @@ const exec = function (cmd, options = {}) {
         console.error('[cmd err]', error)
       }
       res(stdout)
-      console.log(stdout)
+      setImmediate(() => console.log(stdout))
     })
   })
 }
