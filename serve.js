@@ -91,8 +91,12 @@ if (cfg.api_url){
   }
   app.use(cfg.local_api_uri, proxy((cfg.api_url ),{
     proxyReqPathResolver: function (req) {
-      console.log(req.url)
-      return cfg.api_uri+req.url
+      const url = req.url
+      setImmediate(() => console.log(url))
+      const urlPath = url.split('?')[0]
+      const query = url.includes('?') ? '?' + url.split('?')[1] : ''
+      const sanitizedPath = path.posix.normalize(urlPath).replace(/^(\.\.\/)+/, '/')
+      return cfg.api_uri + sanitizedPath + query
     },
     proxyReqOptDecorator(proxyReqOpts, srcReq) {
       // recieves an Object of headers, returns an Object of headers.
