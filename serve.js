@@ -93,7 +93,10 @@ if (cfg.api_url){
     proxyReqPathResolver: function (req) {
       const url = req.url
       setImmediate(() => console.log(url))
-      return cfg.api_uri+url
+      const urlPath = url.split('?')[0]
+      const query = url.includes('?') ? '?' + url.split('?')[1] : ''
+      const sanitizedPath = path.posix.normalize(urlPath).replace(/^(\.\.\/)+/, '/')
+      return cfg.api_uri + sanitizedPath + query
     },
     proxyReqOptDecorator(proxyReqOpts, srcReq) {
       // recieves an Object of headers, returns an Object of headers.
