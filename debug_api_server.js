@@ -3,7 +3,7 @@ const app = express()
 const port = 3999
 
 app.use('/api',(req, res, next) => {
-    console.log(req.headers)
+    process.stdout.write(JSON.stringify(req.headers) + '\n')
     res.setHeader('content-type','application/json')
     res.send(req.headers)
     next()
