@@ -59,6 +59,7 @@ npx serve
 | `index_path` | `INDEX_PATH` | `null` | Path to the index file (for history mode). Defaults to `root_dir/index.html`. |
 | `auto_update` | N/A | `true` | Enables `/_oneserve/update` endpoint to trigger `git pull`. |
 | `console_title` | `CONSOLE_TITLE` | Package Name | Title of the process. |
+| `max_age` | `MAX_AGE` | `1d` | Cache-Control max-age for static assets. |
 
 ### Configuration File (`serve.cfg.json`) Example
 
@@ -70,7 +71,8 @@ Create a `serve.cfg.json` in your project root:
   "root_dir": "./dist",
   "mode": "history",
   "api_url": "http://backend-api.com",
-  "local_api_uri": "/api/v1"
+  "local_api_uri": "/api/v1",
+  "max_age": "1d"
 }
 ```
 
