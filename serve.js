@@ -39,7 +39,8 @@ let cfg={
   root_dir:'./spa',
   index_path:null, // for hostory mode,
   auto_update:true,
-  console_title: packageInfo.name
+  console_title: packageInfo.name,
+  max_age: '1d'
 }
 
 try{
@@ -78,12 +79,18 @@ if (process.env.CONSOLE_TITLE) {
   cfg.console_title = process.env.CONSOLE_TITLE
 }
 
+if (process.env.MAX_AGE) {
+  cfg.max_age = process.env.MAX_AGE
+}
+
 if (cfg.root_dir && cfg.root_dir[0]==='.'){
 	cfg.root_dir=path.join(process.cwd(),cfg.root_dir)
 }
 
 process.title = cfg.console_title
-app.use(express.static(cfg.root_dir))
+app.use(express.static(cfg.root_dir, {
+  maxAge: cfg.max_age
+}))
 
 if (cfg.api_url){
   if (!cfg.local_api_uri){
